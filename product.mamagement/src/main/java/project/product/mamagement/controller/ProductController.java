@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import project.product.mamagement.dto.ProductRequestDto;
 import project.product.mamagement.entity.Product;
 import project.product.mamagement.service.ProductService;
 
@@ -21,7 +22,7 @@ public class ProductController {
 		this.service = service;
 	}
 	@PostMapping("/addProduct")
-	public String addProduct(@RequestBody Product prod) {
+	public String addProduct(@RequestBody ProductRequestDto prod) {
 		return service.addProduct(prod);
 	}
 	@PatchMapping("/updateProduct")
@@ -41,4 +42,3 @@ public class ProductController {
 		return service.viewAllProducts();
 	}
 }
-//https://github.com/deep473/product_management

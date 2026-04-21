@@ -4,553 +4,123 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Update Product</title>
-    <!-- Modern fonts for premium look -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #0ea5e9;       /* Sky Blue for Update theme */
-            --primary-hover: #0284c7;
-            --secondary: #38bdf8;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --bg-input: #f8fafc;
-            --border-color: #cbd5e1;
-            --success-bg: #f0fdf4;
-            --success-text: #166534;
-            --info-bg: #f0f9ff;
-            --info-text: #0369a1;
-            --error-bg: #fef2f2;
-            --error-text: #991b1b;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); /* Premium dark background to contrast the card */
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            color: var(--text-main);
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Abstract glowing background blobs */
-        .decoration {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(90px);
-            z-index: 0;
-            opacity: 0.3;
-            animation: float 20s infinite ease-in-out alternate;
-            pointer-events: none;
-        }
-
-        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: #38bdf8; }
-        .blob-2 { bottom: -15%; right: -10%; width: 600px; height: 600px; background: #818cf8; animation-delay: -5s; }
-
-        @keyframes float {
-            0% { transform: scale(1) translate(0, 0); }
-            50% { transform: scale(1.1) translate(5%, 10%); }
-            100% { transform: scale(0.9) translate(-5%, -5%); }
-        }
-
+        * { box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { margin: 0; background: #f8fafc; }
         header {
-            padding: 24px 5%;
+            background: #0f172a;
+            color: white;
+            padding: 20px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 100%;
-            z-index: 10;
         }
-
-        .logo {
-            font-family: 'Outfit', sans-serif;
-            font-size: 26px;
-            font-weight: 800;
-            color: white;
-            letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
         .btn-link {
             text-decoration: none;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: #2563eb;
             color: white;
-            padding: 10px 24px;
-            border-radius: 9999px;
-            font-weight: 500;
-            font-family: 'Outfit', sans-serif;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
         }
-
-        .btn-link:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-
         .container {
             width: 90%;
-            max-width: 600px;
-            margin: 40px auto 60px auto;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            padding: 45px 50px;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.2) inset;
-            animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: translateY(40px);
-            z-index: 10;
+            max-width: 650px;
+            margin: 35px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
         }
-
-        /* Top colored bar on the card */
-        .card-top-bar {
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 6px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 24px 24px 0 0;
-        }
-
-        @keyframes slideUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .header-icon {
-            width: 64px;
-            height: 64px;
-            background: var(--info-bg);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            margin: 0 auto 20px auto;
-            border: 1px solid #bae6fd;
-            box-shadow: 0 8px 16px rgba(14, 165, 233, 0.15);
-        }
-
-        h2 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            color: #0f172a;
-            text-align: center;
-            letter-spacing: -0.5px;
-        }
-
-        p.subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            margin-bottom: 36px;
-            font-size: 15px;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 20px;
-        }
-
-        .form-row .form-group {
-            flex: 1;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-            position: relative;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 600;
-            font-size: 14px;
-            color: #475569;
-            font-family: 'Outfit', sans-serif;
-            transition: color 0.3s ease;
-        }
-
-        .form-group:focus-within label {
-            color: var(--primary);
-        }
-
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 6px; font-weight: bold; }
         input, textarea {
             width: 100%;
-            padding: 16px 18px;
-            border: 2px solid var(--border-color);
-            background: var(--bg-input);
-            border-radius: 14px;
-            font-size: 15px;
-            font-family: 'Inter', sans-serif;
-            color: var(--text-main);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
         }
-
-        textarea {
-            min-height: 110px;
-            resize: vertical;
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: #ffffff;
-            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
-        }
-
-        input::placeholder, textarea::placeholder {
-            color: #94a3b8;
-        }
-
+        textarea { min-height: 90px; resize: vertical; }
         button {
-            width: 100%;
-            background: linear-gradient(135deg, var(--primary), #38bdf8);
+            background: #0ea5e9;
             color: white;
             border: none;
-            padding: 18px;
-            border-radius: 14px;
-            font-size: 17px;
-            font-weight: 600;
-            font-family: 'Outfit', sans-serif;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 20px -10px rgba(14, 165, 233, 0.6);
-            margin-top: 10px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
         }
-
-        button::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-            transition: all 0.6s ease;
-        }
-
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px -10px rgba(14, 165, 233, 0.8);
-        }
-
-        button:hover::after {
-            left: 100%;
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        button:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Loading Spinner */
-        .spinner {
-            display: none;
-            width: 20px; height: 20px;
-            border: 3px solid rgba(255,255,255,0.4);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
         .message {
-            margin-top: 24px;
-            padding: 16px 20px;
-            border-radius: 12px;
-            background: var(--info-bg);
-            color: var(--info-text);
-            font-weight: 500;
-            border: 1px solid #bae6fd;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: scale(0.95);
-        }
-
-        .message.success { background: var(--success-bg); color: var(--success-text); border-color: #bbf7d0; }
-        .message.error { background: var(--error-bg); color: var(--error-text); border-color: #fecaca; }
-
-        @keyframes popIn {
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* Modal Overlay CSS */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            animation: fadeInModal 0.3s ease forwards;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-            animation: popInModal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            position: relative;
-        }
-
-        @keyframes fadeInModal { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes popInModal { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-
-        .modal-icon {
-            width: 70px; height: 70px;
-            background: #fef2f2;
-            color: #ef4444;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 24px auto;
-            border: 4px solid #fee2e2;
-        }
-
-        .modal-title { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 700; color: #1e293b; margin-bottom: 12px; }
-        .modal-text { color: #64748b; font-size: 15px; margin-bottom: 30px; line-height: 1.6; }
-        
-        .modal-btn {
-            background: #ef4444; color: white; border: none; padding: 12px 24px; border-radius: 12px;
-            font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; width: 100%;
-        }
-        .modal-btn:hover { background: #dc2626; transform: translateY(-2px); }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            .container { padding: 40px 30px; width: 92%; margin-top: 20px; }
-            .form-row { flex-direction: column; gap: 0; }
-            header { padding: 20px; }
+            margin-top: 18px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #e0f2fe;
+            color: #075985;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="decoration blob-1"></div>
-    <div class="decoration blob-2"></div>
-
     <header>
-        <div class="logo">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #38bdf8;">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                <line x1="12" y1="22.08" x2="12" y2="12"></line>
-            </svg>
-            Admin Panel
-        </div>
-        <a class="btn-link" href="product_management.html">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            Back
-        </a>
+        <h1>Update Product</h1>
+        <a class="btn-link" href="product_management.html">Back</a>
     </header>
 
     <div class="container">
-        <div class="card-top-bar"></div>
-
-        <div class="header-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 20h9"></path>
-                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-            </svg>
-        </div>
-
-        <h2>Update Product</h2>
-        <p class="subtitle">Modify the details below to update an existing product in the database.</p>
-
-        <!-- Using form-row to put ID and Price side by side to save vertical space -->
-        <div class="form-row">
-            <div class="form-group">
-                <label for="id">Product ID</label>
-                <input type="number" id="id" placeholder="e.g. 101" />
-            </div>
-
-            <div class="form-group">
-                <label for="price">Price ($)</label>
-                <input type="number" id="price" placeholder="0.00" min="0" step="0.01" />
-            </div>
+        <div class="form-group">
+            <label>Product ID</label>
+            <input type="number" id="id" />
         </div>
 
         <div class="form-group">
-            <label for="name">Product Name</label>
-            <input type="text" id="name" placeholder="e.g. Wireless Mouse" />
+            <label>Name</label>
+            <input type="text" id="name" />
         </div>
 
         <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" placeholder="Update features and details..."></textarea>
+            <label>Description</label>
+            <textarea id="description"></textarea>
         </div>
 
         <div class="form-group">
-            <label for="photoUrl">Photo URL</label>
-            <input type="text" id="photoUrl" placeholder="https://example.com/image.jpg" />
+            <label>Price</label>
+            <input type="number" id="price" />
         </div>
 
-        <button onclick="updateProduct()" id="updateBtn">
-            <svg id="btnIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="23 4 23 10 17 10"></polyline>
-                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-            </svg>
-            <span id="btnText">Update Product</span>
-            <div class="spinner" id="btnSpinner"></div>
-        </button>
+        <div class="form-group">
+            <label>Photo URL</label>
+            <input type="text" id="photoUrl" />
+        </div>
+
+        <button onclick="updateProduct()">Update Product</button>
 
         <div id="messageArea"></div>
     </div>
 
-    <!-- Modal Popup for Not Found Error -->
-    <div class="modal-overlay" id="errorModal">
-        <div class="modal-content">
-            <div class="modal-icon">
-                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
-            </div>
-            <div class="modal-title">Product Not Found</div>
-            <div class="modal-text">The product ID <strong id="modalIdLabel"></strong> does not exist in the database. Please check the ID and try again.</div>
-            <button class="modal-btn" onclick="closeModal()">Try Again</button>
-        </div>
-    </div>
-
     <script>
-        function closeModal() {
-            document.getElementById('errorModal').style.display = 'none';
-        }
-
         async function updateProduct() {
-            const btn = document.getElementById('updateBtn');
-            const btnText = document.getElementById('btnText');
-            const btnSpinner = document.getElementById('btnSpinner');
-            const btnIcon = document.getElementById('btnIcon');
-            const messageArea = document.getElementById("messageArea");
-            
-            // Basic validation
-            if (!document.getElementById("id").value) {
-                messageArea.innerHTML = `
-                    <div class="message error">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                        <div>Please enter a Product ID to update.</div>
-                    </div>`;
-                document.getElementById("id").focus();
-                return;
-            }
-
-            // Syncing payload logic exactly with your snippet.
-            // Using parseFloat instead of parseInt for price to support decimals, but logic remains identical.
             const product = {
                 id: parseInt(document.getElementById("id").value),
                 name: document.getElementById("name").value,
                 description: document.getElementById("description").value,
-                price: parseFloat(document.getElementById("price").value) || parseInt(document.getElementById("price").value),
+                price: parseInt(document.getElementById("price").value),
                 photoUrl: document.getElementById("photoUrl").value
             };
 
-            // UI Loading State
-            btnText.textContent = 'Updating...';
-            btnIcon.style.display = 'none';
-            btnSpinner.style.display = 'block';
-            btn.disabled = true;
-            messageArea.innerHTML = "";
+            const response = await fetch("/updateProduct", {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(product)
+            });
 
-            try {
-                // Using exactly your Endpoint and PATCH method
-                const response = await fetch("/updateProduct", {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(product)
-                });
+            const result = await response.text();
 
-                const result = await response.text();
-
-                // If backend returns an error or a message indicating the product was not found
-                if (!response.ok || result.toLowerCase().includes("not found") || result.toLowerCase().includes("not present")) {
-                    document.getElementById("modalIdLabel").textContent = "#" + product.id;
-                    document.getElementById("errorModal").style.display = "flex";
-                    return; // Skip success message
-                }
-
-                // Success Message
-                messageArea.innerHTML = `
-                    <div class="message success">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                        <div>${result}</div>
-                    </div>`;
-
-            } catch (error) {
-                console.warn("Backend offline or Error:", error);
-                
-                await new Promise(r => setTimeout(r, 800)); // Fake network delay
-
-                // DEMO MODE logic to show the beautiful modal popup
-                // We'll simulate finding it, except if they type '999' which triggers the modal!
-                if (product.id === 999) {
-                    document.getElementById("modalIdLabel").textContent = "#" + product.id;
-                    document.getElementById("errorModal").style.display = "flex";
-                } else {
-                    messageArea.innerHTML = `
-                        <div class="message success">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                            </svg>
-                            <div>(Demo) Product #${product.id} updated successfully. Try ID 999 for error!</div>
-                        </div>`;
-                }
-            } finally {
-                // Restore button state
-                btnText.textContent = 'Update Product';
-                btnIcon.style.display = 'block';
-                btnSpinner.style.display = 'none';
-                btn.disabled = false;
-            }
+            document.getElementById("messageArea").innerHTML =
+                `<div class="message">${result}</div>`;
         }
     </script>
 </body>

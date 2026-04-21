@@ -4,350 +4,124 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product Management</title>
-    <!-- Use premium fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --bg-color: #f8fafc;
-        }
-
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
 
         body {
-            background: var(--bg-color);
-            min-height: 100vh;
-            color: var(--text-main);
-            overflow-x: hidden;
-            position: relative;
-            z-index: 0;
-        }
-
-        /* Beautiful ambient abstract background */
-        .ambient-shape {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(90px);
-            z-index: -1;
-            opacity: 0.6;
-            animation: drift 25s infinite ease-in-out alternate;
-        }
-
-        .shape-1 { top: -15%; left: -10%; width: 60vw; height: 60vw; background: #c7d2fe; max-width: 600px; max-height: 600px; }
-        .shape-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: #fbcfe8; max-width: 500px; max-height: 500px; animation-delay: -5s; }
-        .shape-3 { top: 30%; left: 40%; width: 40vw; height: 40vw; background: #e0e7ff; max-width: 400px; max-height: 400px; animation-delay: -10s; }
-
-        @keyframes drift {
-            0% { transform: scale(1) translate(0, 0) rotate(0deg); }
-            50% { transform: scale(1.1) translate(5%, 10%) rotate(10deg); }
-            100% { transform: scale(0.9) translate(-5%, -5%) rotate(-5deg); }
+            margin: 0;
+            background: #f1f5f9;
+            color: #1e293b;
         }
 
         header {
-            padding: 24px 6%;
+            background: #0f172a;
+            color: white;
+            padding: 20px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
         header h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 26px;
-            font-weight: 800;
             margin: 0;
-            /* Premium gradient text */
-            background: linear-gradient(135deg, #1e293b 0%, #4f46e5 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            font-size: 28px;
         }
 
         .back-btn {
             text-decoration: none;
-            background: white;
-            color: var(--text-main);
-            padding: 10px 20px;
-            border-radius: 9999px;
-            font-weight: 600;
-            font-family: 'Outfit', sans-serif;
-            font-size: 15px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
-            border: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .back-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-            border-color: #cbd5e1;
-            color: #4f46e5;
+            background: #2563eb;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
         }
 
         .container {
             width: 90%;
             max-width: 1200px;
-            margin: 40px auto 80px auto;
-            position: relative;
-            z-index: 10;
+            margin: 30px auto;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 28px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
         }
 
-        /* Glassmorphic Dashboard Cards */
         .card {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 35px 30px;
-            border-radius: 24px;
-            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05), 0 0 0 1px rgba(255,255,255,0.8) inset;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            text-align: left;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex;
-            flex-direction: column;
-            opacity: 0;
-            transform: translateY(40px);
-            animation: cascadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Dynamic coloring and staggered animations */
-        .card:nth-child(1) { animation-delay: 0.1s; --theme-color: #10b981; --theme-bg: #ecfdf5; } /* Green - Add */
-        .card:nth-child(2) { animation-delay: 0.2s; --theme-color: #3b82f6; --theme-bg: #eff6ff; } /* Blue - Update */
-        .card:nth-child(3) { animation-delay: 0.3s; --theme-color: #f43f5e; --theme-bg: #fff1f2; } /* Rose - Delete */
-        .card:nth-child(4) { animation-delay: 0.4s; --theme-color: #8b5cf6; --theme-bg: #f5f3ff; } /* Violet - Search */
-        .card:nth-child(5) { animation-delay: 0.5s; --theme-color: #f59e0b; --theme-bg: #fffbeb; } /* Amber - View All */
-
-        @keyframes cascadeUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 0 0 1px var(--theme-color) inset;
             background: white;
-            z-index: 2;
-        }
-
-        /* Top highlight bar on hover */
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 4px;
-            background: var(--theme-color);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
-        }
-
-        .card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .icon-box {
-            width: 58px;
-            height: 58px;
-            border-radius: 16px;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-            color: var(--theme-color);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            border: 1px solid rgba(0,0,0,0.03);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .card:hover .icon-box {
-            background: var(--theme-color);
-            color: white;
-            box-shadow: 0 10px 20px -5px var(--theme-color);
-            transform: scale(1.1) rotate(5deg);
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            text-align: center;
         }
 
         .card h2 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 24px;
-            margin-bottom: 12px;
-            color: var(--text-main);
-            font-weight: 700;
-            letter-spacing: -0.3px;
+            margin-top: 0;
+            margin-bottom: 10px;
         }
 
         .card p {
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            line-height: 1.6;
-            font-size: 15px;
-            flex-grow: 1; /* Pushes button to bottom */
+            color: #475569;
+            margin-bottom: 18px;
+            line-height: 1.5;
         }
 
-        .card a.action-link {
+        .card a {
             text-decoration: none;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            background: transparent;
-            color: var(--text-main);
-            padding: 14px 0;
-            border-radius: 12px;
-            font-weight: 600;
-            font-family: 'Outfit', sans-serif;
-            font-size: 16px;
-            border: 2px solid #e2e8f0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 100%;
-            position: relative;
-            overflow: hidden;
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
         }
 
-        .card a.action-link::after {
-            content: '→';
-            margin-left: 8px;
-            transition: transform 0.3s ease;
-            font-size: 18px;
-        }
-
-        .card:hover a.action-link {
-            background: var(--theme-bg);
-            border-color: transparent;
-            color: var(--theme-color);
-        }
-
-        .card:hover a.action-link::after {
-            transform: translateX(6px);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 16px;
-                padding: 20px;
-            }
-            .grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            }
+        .card a:hover {
+            background: #1d4ed8;
         }
     </style>
 </head>
 <body>
-    <div class="ambient-shape shape-1"></div>
-    <div class="ambient-shape shape-2"></div>
-    <div class="ambient-shape shape-3"></div>
-
     <header>
-        <h1>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #4f46e5;">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                <line x1="12" y1="22.08" x2="12" y2="12"></line>
-            </svg>
-            Product Center
-        </h1>
-        <a class="back-btn" href="admin_home.html">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                <polyline points="9 22 9 12 15 12 15 22"></polyline>
-            </svg>
-            Admin Dashboard
-        </a>
+        <h1>Product Management</h1>
+        <a class="back-btn" href="admin_home.html">Back to Home</a>
     </header>
 
     <div class="container">
         <div class="grid">
-            
             <div class="card">
-                <div class="icon-box">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                </div>
                 <h2>Add Product</h2>
                 <p>Create and save a new product into the database.</p>
-                <a href="add_product.html" class="action-link">Open Tool</a>
+                <a href="add_product.html">Open</a>
             </div>
 
             <div class="card">
-                <div class="icon-box">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon>
-                    </svg>
-                </div>
                 <h2>Update Product</h2>
-                <p>Modify the details, price, or description of an existing product.</p>
-                <a href="update_product.html" class="action-link">Open Tool</a>
+                <p>Modify the details of an existing product.</p>
+                <a href="update_product.html">Open</a>
             </div>
 
             <div class="card">
-                <div class="icon-box">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                    </svg>
-                </div>
                 <h2>Delete Product</h2>
-                <p>Permanently remove a product from the database using its ID.</p>
-                <a href="delete_product.html" class="action-link">Open Tool</a>
+                <p>Delete a product using its product ID.</p>
+                <a href="delete_product.html">Open</a>
             </div>
 
             <div class="card">
-                <div class="icon-box">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </div>
                 <h2>Search Product</h2>
-                <p>View details of a single product by entering its product ID.</p>
-                <a href="view_product.html" class="action-link">Open Tool</a>
+                <p>View a single product by entering product ID.</p>
+                <a href="view_product.html">Open</a>
             </div>
 
             <div class="card">
-                <div class="icon-box">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="3" width="7" height="7"></rect>
-                        <rect x="14" y="3" width="7" height="7"></rect>
-                        <rect x="14" y="14" width="7" height="7"></rect>
-                        <rect x="3" y="14" width="7" height="7"></rect>
-                    </svg>
-                </div>
                 <h2>View All Products</h2>
-                <p>Fetch and display a comprehensive list of all products.</p>
-                <a href="view_all_products.html" class="action-link">Open Tool</a>
+                <p>Fetch and display all products from database.</p>
+                <a href="view_all_products.html">Open</a>
             </div>
-
         </div>
     </div>
 </body>
